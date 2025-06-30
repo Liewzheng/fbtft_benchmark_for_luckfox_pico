@@ -1,0 +1,407 @@
+diff --git a/sysdrv/source/kernel/arch/arm/boot/dts/rv1103-luckfox-pico-ipc.dtsi b/sysdrv/source/kernel/arch/arm/boot/dts/rv1103-luckfox-pico-ipc.dtsi
+index 0d9181146..c77ce148b 100755
+--- a/sysdrv/source/kernel/arch/arm/boot/dts/rv1103-luckfox-pico-ipc.dtsi
++++ b/sysdrv/source/kernel/arch/arm/boot/dts/rv1103-luckfox-pico-ipc.dtsi
+@@ -328,9 +328,9 @@ fbtft@0{
+       fps = <30>;
+       buswidth = <8>;
+       debug = <0x7>;
+-      led-gpios = <&gpio0 RK_PA4 GPIO_ACTIVE_HIGH>;//BL
+-      dc-gpios = <&gpio1 RK_PA2 GPIO_ACTIVE_HIGH>;      //DC
+-      reset-gpios = <&gpio1 RK_PC3 GPIO_ACTIVE_LOW>;    //RES
++      led = <&gpio0 RK_PA4 GPIO_ACTIVE_HIGH>;//BL
++      dc = <&gpio1 RK_PA2 GPIO_ACTIVE_HIGH>;      //DC
++      reset = <&gpio1 RK_PC3 GPIO_ACTIVE_LOW>;    //RES
+   };
+ };
+ // I2C
+diff --git a/sysdrv/source/kernel/arch/arm/boot/dts/rv1103g-luckfox-pico.dts b/sysdrv/source/kernel/arch/arm/boot/dts/rv1103g-luckfox-pico.dts
+old mode 100755
+new mode 100644
+index 278db7e41..8698fd1b5
+--- a/sysdrv/source/kernel/arch/arm/boot/dts/rv1103g-luckfox-pico.dts
++++ b/sysdrv/source/kernel/arch/arm/boot/dts/rv1103g-luckfox-pico.dts
+@@ -13,38 +13,52 @@ / {
+ 	model = "Luckfox Pico";
+ 	compatible = "rockchip,rv1103g-38x38-ipc-v10", "rockchip,rv1103";
+ 
+-	gpio4pa4:gpio4pa4 {
++	/* LCD_DC GPIO1_A2_D */
++	gpio1pa2:gpio1pa2 {
+ 		compatible = "regulator-fixed";
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&gpio4_pa4>;
+-		regulator-name = "gpio4_pa4";
++		pinctrl-0 = <&gpio1_pa2>;
++		regulator-name = "gpio1_pa2";
+ 		regulator-always-on;
+ 	};
+ 
+-	gpio4pa3:gpio4pa3 {
++	/* LCD_CS GPIO1_C0_D */
++	// gpio1pc0:gpio1pc0 {
++	// 	compatible = "regulator-fixed";
++	// 	pinctrl-names = "default";
++	// 	pinctrl-0 = <&gpio1_pc0>;
++	// 	regulator-name = "gpio1_pc0";
++	// 	regulator-always-on;
++	// };
++
++	/* LCD_RST  GPIO1_C3_D */
++	gpio1pc3:gpio1pc3 {
+ 		compatible = "regulator-fixed";
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&gpio4_pa3>;
+-		regulator-name = "gpio4_pa3";
++		pinctrl-0 = <&gpio1_pc3>;
++		regulator-name = "gpio1_pc3";
+ 		regulator-always-on;
+ 	};
+ 
+-	gpio4pa2:gpio4pa2 {
++	/* LCD_BL GPIO0_A4_D */
++	gpio0pa4:gpio0pa4 {
+ 		compatible = "regulator-fixed";
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&gpio4_pa2>;
+-		regulator-name = "gpio4_pa2";
++		pinctrl-0 = <&gpio0_pa4>;
++		regulator-name = "gpio0_pa4";
+ 		regulator-always-on;
+ 	};
+ 
+-	gpio4pa6:gpio4pa6 {
++	/* KEY 0 GPIO1_D1_D*/
++	gpio1pd1:gpio1pd1 {
+ 		compatible = "regulator-fixed";
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&gpio4_pa6>;
+-		regulator-name = "gpio4_pa6";
++		pinctrl-0 = <&gpio1_pd1>;
++		regulator-name = "gpio1_pd1";
+ 		regulator-always-on;
+ 	};
+ 
++	/* KEY 1 GPIO4_B0_D */
+ 	gpio4pb0:gpio4pb0 {
+ 		compatible = "regulator-fixed";
+ 		pinctrl-names = "default";
+@@ -53,45 +67,64 @@ gpio4pb0:gpio4pb0 {
+ 		regulator-always-on;
+ 	};
+ 
+-	gpio4pb1:gpio4pb1 {
++	/* KEY 2 GPIO1_C7_D */
++	gpio1pc7:gpio1pc7 {
+ 		compatible = "regulator-fixed";
+ 		pinctrl-names = "default";
+-		pinctrl-0 = <&gpio4_pb1>;
+-		regulator-name = "gpio4_pb1";
++		pinctrl-0 = <&gpio1_pc7>;
++		regulator-name = "gpio1_pc7";
+ 		regulator-always-on;
+ 	};
++
++	/* KEY 3 GPIO1_C6_D */
++	gpio1pc6:gpio1pc6 {
++		compatible = "regulator-fixed";
++		pinctrl-names = "default";
++		pinctrl-0 = <&gpio1_pc6>;
++		regulator-name = "gpio1_pc6";
++		regulator-always-on;
++	};
++
++
+ };
++/**********GPIO**********/
++&pinctrl {
++	gpio1_pa2: gpio1-pa2 {
++		rockchip,pins = <1 RK_PA2 RK_FUNC_GPIO &pcfg_pull_none>;
++	};
+ 
+-/**********GPIO***********/
+-&pinctrl{
+-	gpio {
+-		gpio4_pa4:gpio4-pa4 {
+-			rockchip,pins = <4 RK_PA4 RK_FUNC_GPIO &pcfg_pull_none>;
+-		};
++	// gpio1_pc0: gpio1-pc0 {
++	// 	rockchip,pins = <1 RK_PC0 RK_FUNC_GPIO &pcfg_pull_none>;
++	// };
+ 
+-		gpio4_pa3:gpio4-pa3 {
+-			rockchip,pins = <4 RK_PA3 RK_FUNC_GPIO &pcfg_pull_none>;
+-		};
++	gpio1_pc3: gpio1-pc3 {
++		rockchip,pins = <1 RK_PC3 RK_FUNC_GPIO &pcfg_pull_none>;
++	};
+ 
+-		gpio4_pa2:gpio4-pa2 {
+-			rockchip,pins = <4 RK_PA2 RK_FUNC_GPIO &pcfg_pull_none>;
+-		};
++	gpio0_pa4: gpio0-pa4 {
++		rockchip,pins = <0 RK_PA4 RK_FUNC_GPIO &pcfg_pull_none>;
++	};
+ 
+-		gpio4_pa6:gpio4-pa6 {
+-			rockchip,pins = <4 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
+-		};
++	gpio1_pd1: gpio1-pd1 {
++		rockchip,pins = <1 RK_PD1 RK_FUNC_GPIO &pcfg_pull_up>;
++	};
+ 
+-		gpio4_pb0:gpio4-pb0 {
+-			rockchip,pins = <4 RK_PB0 RK_FUNC_GPIO &pcfg_pull_none>;
+-		};
++	gpio4_pb0: gpio4-pb0 {
++		rockchip,pins = <4 RK_PB0 RK_FUNC_GPIO &pcfg_pull_up>;
++	};
+ 
+-		gpio4_pb1:gpio4-pb1 {
+-			rockchip,pins = <4 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
++	gpio1-pc7 {
++		gpio1_pc7: gpio1-pc7 {
++			rockchip,pins = <1 RK_PC7 RK_FUNC_GPIO &pcfg_pull_up>;
+ 		};
+ 	};
++
++	gpio1_pc6: gpio1-pc6 {
++		rockchip,pins = <1 RK_PC6 RK_FUNC_GPIO &pcfg_pull_up>;
++	};
+ };
+ 
+-/**********SDMMC**********/
++/**********SD Card**********/
+ &sdmmc {
+ 	max-frequency = <50000000>;
+ 	no-sdio;
+@@ -105,53 +138,38 @@ &sdmmc {
+ 	status = "okay";
+ };
+ 
+-/**********ETH**********/
+-&gmac {
+-	status = "disabled";
+-};
+-
+ /**********USB**********/
+ &usbdrd_dwc3 {
+-	status = "okay";
+ 	dr_mode = "peripheral";
+ };
+ 
+-/**********SPI**********/
+-/* SPI0_M0 */
+-&spi0 {
+-	status = "disabled";
+-	spidev@0 {
+-		spi-max-frequency = <50000000>;
+-	};
+-  fbtft@0 {
+-    spi-max-frequency = <50000000>;
+-  };
+-};
+-
+-/**********I2C**********/
+-/* I2C3_M1 */
+-&i2c3 {
+-	status = "disabled";
+-	clock-frequency = <100000>;
+-};
+-
+-/**********UART**********/
+-/* UART3_M1 */
+-&uart3 {
++/**********ETH**********/
++&gmac {
+ 	status = "disabled";
+ };
+ 
+-/* UART4_M1 */
+-&uart4 {
+-	status = "disabled";
+-};
++/**********SPI**********/
++&spi0 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&spi0m0_clk &spi0m0_mosi &spi0m0_cs0>;
++    spidev@0 {
++        status = "disabled";
++    };
++	fbtft@0{
++		status = "okay";
++		compatible = "sitronix,st7789v"; 
++		reg = <0>;	
++		fps = <30>;
++		rotate = <0>;
++		buswidth = <8>;
++		debug = <0x7>;
++		led = <&gpio0 RK_PA4 GPIO_ACTIVE_LOW>;	 //BL
++		dc = <&gpio1 RK_PA2 GPIO_ACTIVE_HIGH>;	 //DC
++		reset = <&gpio1 RK_PC3 GPIO_ACTIVE_LOW>; //RES
+ 
+-/**********PWM**********/
+-/* PWM1_M0 */
+-&pwm1 {
+-	status = "disabled";
++	};
+ };
+ 
+ 
+ 
+-
+diff --git a/sysdrv/source/kernel/arch/arm/configs/luckfox_rv1106_linux_defconfig b/sysdrv/source/kernel/arch/arm/configs/luckfox_rv1106_linux_defconfig
+index 152559a29..63ba7fc6c 100755
+--- a/sysdrv/source/kernel/arch/arm/configs/luckfox_rv1106_linux_defconfig
++++ b/sysdrv/source/kernel/arch/arm/configs/luckfox_rv1106_linux_defconfig
+@@ -194,7 +194,6 @@ CONFIG_USB_VIDEO_CLASS=y
+ CONFIG_VIDEOBUF2_CMA_SG=y
+ CONFIG_V4L_PLATFORM_DRIVERS=y
+ CONFIG_VIDEO_ROCKCHIP_CIF=m
+-CONFIG_VIDEO_ROCKCHIP_ISP=m
+ CONFIG_VIDEO_RK_IRCUT=y
+ CONFIG_VIDEO_MIS5001=m
+ CONFIG_VIDEO_SC3336=m
+@@ -204,6 +203,7 @@ CONFIG_DRM_ROCKCHIP=y
+ CONFIG_ROCKCHIP_VOP=y
+ CONFIG_ROCKCHIP_RGB=y
+ CONFIG_DRM_PANEL_SIMPLE=y
++CONFIG_DRM_PANEL_SITRONIX_ST7789V=m
+ CONFIG_DRM_SII902X=y
+ CONFIG_BACKLIGHT_PWM=y
+ CONFIG_ROCKCHIP_MULTI_RGA=m
+@@ -232,11 +232,14 @@ CONFIG_SND_SIMPLE_CARD=y
+ # CONFIG_USB_HID is not set
+ CONFIG_USB=y
+ CONFIG_USB_OTG=y
++CONFIG_USB_AUTOSUSPEND_DELAY=-1
+ CONFIG_USB_XHCI_HCD=y
+ CONFIG_USB_EHCI_HCD=y
+ CONFIG_USB_STORAGE=y
+ CONFIG_USB_DWC3=y
++CONFIG_USB_DWC3_GADGET=y
+ CONFIG_USB_GADGET=y
++CONFIG_USB_GADGET_VBUS_DRAW=20
+ CONFIG_USB_CONFIGFS=y
+ CONFIG_USB_CONFIGFS_UEVENT=y
+ CONFIG_USB_CONFIGFS_RNDIS=y
+@@ -330,6 +333,7 @@ CONFIG_NFS_V3_ACL=y
+ CONFIG_NFS_V4=y
+ CONFIG_NLS_CODEPAGE_437=y
+ CONFIG_NLS_ISO8859_1=y
++CONFIG_INIT_STACK_NONE=y
+ CONFIG_CRYPTO_ZSTD=y
+ # CONFIG_CRYPTO_HW is not set
+ # CONFIG_XZ_DEC_X86 is not set
+@@ -338,6 +342,10 @@ CONFIG_CRYPTO_ZSTD=y
+ # CONFIG_XZ_DEC_SPARC is not set
+ CONFIG_DMA_CMA=y
+ CONFIG_CMA_SIZE_MBYTES=0
++CONFIG_FONTS=y
++CONFIG_FONT_8x8=y
++CONFIG_FONT_8x16=y
++CONFIG_FONT_6x10=y
+ CONFIG_PRINTK_TIME=y
+ CONFIG_DEBUG_INFO=y
+ CONFIG_DEBUG_FS=y
+@@ -345,3 +353,13 @@ CONFIG_DEBUG_FS=y
+ # CONFIG_SCHED_DEBUG is not set
+ # CONFIG_FTRACE is not set
+ # CONFIG_RUNTIME_TESTING_MENU is not set
++
++CONFIG_TTY=y
++CONFIG_VT=y
++CONFIG_CONSOLE_TRANSLATIONS=y
++CONFIG_VT_CONSOLE=y
++CONFIG_HW_CONSOLE=y
++CONFIG_VT_HW_CONSOLE_BINDING=y
++CONFIG_UNIX98_PTYS=y
++# CONFIG_LEGACY_PTYS is not set
++CONFIG_LDISC_AUTOLOAD=y
+diff --git a/sysdrv/source/kernel/drivers/staging/fbtft/fbtft-core.c b/sysdrv/source/kernel/drivers/staging/fbtft/fbtft-core.c
+index 2baffa436..39c6fd5d3 100644
+--- a/sysdrv/source/kernel/drivers/staging/fbtft/fbtft-core.c
++++ b/sysdrv/source/kernel/drivers/staging/fbtft/fbtft-core.c
+@@ -24,6 +24,8 @@
+ #include <linux/platform_device.h>
+ #include <linux/property.h>
+ #include <linux/spinlock.h>
++#include <linux/gpio.h>
++#include <linux/of_gpio.h>
+ 
+ #include <video/mipi_display.h>
+ 
+@@ -74,17 +76,39 @@ static int fbtft_request_one_gpio(struct fbtft_par *par,
+ 				  const char *name, int index,
+ 				  struct gpio_desc **gpiop)
+ {
+-	struct device *dev = par->info->device;
+-
+-	*gpiop = devm_gpiod_get_index_optional(dev, name, index,
+-					       GPIOD_OUT_LOW);
+-	if (IS_ERR(*gpiop))
+-		return dev_err_probe(dev, PTR_ERR(*gpiop), "Failed to request %s GPIO\n", name);
+-
+-	fbtft_par_dbg(DEBUG_REQUEST_GPIOS, par, "%s: '%s' GPIO\n",
+-		      __func__, name);
+-
+-	return 0;
++    struct device *dev = par->info->device;
++    struct device_node *node = dev->of_node;
++    int gpio, flags, ret = 0;
++    enum of_gpio_flags of_flags;
++    if (of_find_property(node, name, NULL)) {
++        gpio = of_get_named_gpio_flags(node, name, index, &of_flags);
++        if (gpio == -ENOENT)
++            return 0;
++        if (gpio == -EPROBE_DEFER)
++            return gpio;
++        if (gpio < 0) {
++            dev_err(dev,
++                "failed to get '%s' from DT\n", name);
++            return gpio;
++        }
++         //active low translates to initially low
++        flags = (of_flags & OF_GPIO_ACTIVE_LOW) ? GPIOF_OUT_INIT_LOW :
++                            GPIOF_OUT_INIT_HIGH;
++        ret = devm_gpio_request_one(dev, gpio, flags,
++                        dev->driver->name);
++        if (ret) {
++            dev_err(dev,
++                "gpio_request_one('%s'=%d) failed with %d\n",
++                name, gpio, ret);
++            return ret;
++        }
++
++        *gpiop = gpio_to_desc(gpio);
++        fbtft_par_dbg(DEBUG_REQUEST_GPIOS, par, "%s: '%s' = GPIO%d\n",
++                            __func__, name, gpio);
++    }
++
++    return ret;
+ }
+ 
+ static int fbtft_request_gpios(struct fbtft_par *par)
+@@ -223,8 +247,11 @@ static void fbtft_reset(struct fbtft_par *par)
+ 	usleep_range(20, 40);
+ 	gpiod_set_value_cansleep(par->gpio.reset, 0);
+ 	msleep(120);
++	gpiod_set_value_cansleep(par->gpio.reset, 1);
++	msleep(120);
+ 
+-	gpiod_set_value_cansleep(par->gpio.cs, 1);  /* Activate chip */
++	gpiod_set_value_cansleep(par->gpio.cs, 0);  /* Activate chip */
++	msleep(120);
+ }
+ 
+ static void fbtft_update_display(struct fbtft_par *par, unsigned int start_line,
+@@ -1171,7 +1198,7 @@ static struct fbtft_platform_data *fbtft_properties_read(struct device *dev)
+ 	pdata->startbyte = fbtft_property_value(dev, "startbyte");
+ 	device_property_read_string(dev, "gamma", (const char **)&pdata->gamma);
+ 
+-	if (device_property_present(dev, "led-gpios"))
++	if (device_property_present(dev, "led"))
+ 		pdata->display.backlight = 1;
+ 	if (device_property_present(dev, "init"))
+ 		pdata->display.fbtftops.init_display =
