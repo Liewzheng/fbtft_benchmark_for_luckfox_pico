@@ -1,8 +1,20 @@
 diff --git a/sysdrv/source/kernel/arch/arm/boot/dts/rv1103-luckfox-pico-ipc.dtsi b/sysdrv/source/kernel/arch/arm/boot/dts/rv1103-luckfox-pico-ipc.dtsi
-index 0d9181146..c77ce148b 100755
+index 0d9181146..eeab644c5 100755
 --- a/sysdrv/source/kernel/arch/arm/boot/dts/rv1103-luckfox-pico-ipc.dtsi
 +++ b/sysdrv/source/kernel/arch/arm/boot/dts/rv1103-luckfox-pico-ipc.dtsi
-@@ -328,9 +328,9 @@ fbtft@0{
+@@ -318,19 +318,19 @@ &spi0 {
+ 
+   spidev@0 {
+     compatible = "rockchip,spidev";
+-		spi-max-frequency = <50000000>;
++		spi-max-frequency = <100000000>;
+ 		reg = <0>;
+ 	};
+   fbtft@0{
+       compatible = "sitronix,st7789v";
+       reg = <0>;
+-      spi-max-frequency = <20000000>;
++      spi-max-frequency = <60000000>;
        fps = <30>;
        buswidth = <8>;
        debug = <0x7>;
