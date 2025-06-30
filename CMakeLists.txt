@@ -22,10 +22,10 @@ endif()
 # 包含目录
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/../lib/Config
-    ${CMAKE_SOURCE_DIR}/../lib/GUI
-    ${CMAKE_SOURCE_DIR}/../lib/LCD
-    ${CMAKE_SOURCE_DIR}/../lib/Fonts
+    ${CMAKE_SOURCE_DIR}/lib/Config
+    ${CMAKE_SOURCE_DIR}/lib/GUI
+    ${CMAKE_SOURCE_DIR}/lib/LCD
+    ${CMAKE_SOURCE_DIR}/lib/Fonts
 )
 
 # 源文件
@@ -36,16 +36,16 @@ set(SOURCES
     src/bmp_loader.c
     
     # 复用原有的库文件
-    ${CMAKE_SOURCE_DIR}/../lib/Config/DEV_Config.c
-    ${CMAKE_SOURCE_DIR}/../lib/Config/dev_hardware_SPI.c
-    ${CMAKE_SOURCE_DIR}/../lib/Config/sysfs_gpio.c
-    ${CMAKE_SOURCE_DIR}/../lib/GUI/GUI_Paint.c
-    ${CMAKE_SOURCE_DIR}/../lib/GUI/GUI_BMP.c
-    ${CMAKE_SOURCE_DIR}/../lib/Fonts/font8.c
-    ${CMAKE_SOURCE_DIR}/../lib/Fonts/font12.c
-    ${CMAKE_SOURCE_DIR}/../lib/Fonts/font16.c
-    ${CMAKE_SOURCE_DIR}/../lib/Fonts/font20.c
-    ${CMAKE_SOURCE_DIR}/../lib/Fonts/font24.c
+    ${CMAKE_SOURCE_DIR}/lib/Config/DEV_Config.c
+    ${CMAKE_SOURCE_DIR}/lib/Config/dev_hardware_SPI.c
+    ${CMAKE_SOURCE_DIR}/lib/Config/sysfs_gpio.c
+    ${CMAKE_SOURCE_DIR}/lib/GUI/GUI_Paint.c
+    ${CMAKE_SOURCE_DIR}/lib/GUI/GUI_BMP.c
+    ${CMAKE_SOURCE_DIR}/lib/Fonts/font8.c
+    ${CMAKE_SOURCE_DIR}/lib/Fonts/font12.c
+    ${CMAKE_SOURCE_DIR}/lib/Fonts/font16.c
+    ${CMAKE_SOURCE_DIR}/lib/Fonts/font20.c
+    ${CMAKE_SOURCE_DIR}/lib/Fonts/font24.c
 )
 
 # 创建可执行文件
