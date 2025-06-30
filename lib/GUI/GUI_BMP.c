@@ -81,13 +81,13 @@ UBYTE GUI_ReadBmp(const char *path)
 	printf("BMP width :%d\r\n",bmpInfoHeader.bWidth);
 	*/
 	// get bmp data and show
-	for(row = 0; row < bmpInfoHeader.bHeight;row++) 
+	for(row = 0; row < (int)bmpInfoHeader.bHeight;row++) 
 	{		
-		for(col = 0; col < bmpInfoHeader.bWidth; ) 
+		for(col = 0; col < (int)bmpInfoHeader.bWidth; ) 
 		{
 			if(bmpInfoHeader.bBitCount==16)
 			{
-				if(fread((char *)&data, 1, len, fp) != len)
+				if(fread((char *)&data, 1, len, fp) != (size_t)len)
 				{
 					perror("get bmpdata:\r\n");
 					break;
@@ -108,7 +108,7 @@ UBYTE GUI_ReadBmp(const char *path)
 			//For RGB888 ARGB8888 XRGB8888 format uniform compression and removal of alpha
 			else if(bmpInfoHeader.bBitCount>16)
 			{
-				if(fread((char *)&argb, 1, len, fp) != len)
+				if(fread((char *)&argb, 1, len, fp) != (size_t)len)
 				{
 					printf("x:%d,y:%d\r\n",col,row);
 					perror("get bmpdata: \r\n");
@@ -126,7 +126,7 @@ UBYTE GUI_ReadBmp(const char *path)
 					perror("get bmpdata:\r\n");
 					break;
 				}
-				for(temp=0;(temp<(8/bmpInfoHeader.bBitCount))&&(col < bmpInfoHeader.bWidth);temp++,col++)
+				for(temp=0;(temp<(8/bmpInfoHeader.bBitCount))&&(col < (int)bmpInfoHeader.bWidth);temp++,col++)
 				{
 					if(bmpInfoHeader.bBitCount==1){
 						data=(pixels<<temp)>>7;

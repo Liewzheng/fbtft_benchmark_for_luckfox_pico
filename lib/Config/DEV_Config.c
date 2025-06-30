@@ -18,6 +18,7 @@ UWORD pwm_dule=100;
 struct sched_param param;
 pthread_attr_t attr;
 void *BL_PWM(void *arg){
+	(void)arg; // 忽略未使用的参数警告
 	
 	UWORD i=0;
 	for(i=0;;i++){

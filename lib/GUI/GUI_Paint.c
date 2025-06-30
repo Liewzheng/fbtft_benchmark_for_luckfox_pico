@@ -252,18 +252,20 @@ void Paint_DrawPoint(UWORD Xpoint, UWORD Ypoint, UWORD Color,
 
     int16_t XDir_Num , YDir_Num;
     if (Dot_Style == DOT_FILL_AROUND) {
-        for (XDir_Num = 0; XDir_Num < 2 * Dot_Pixel - 1; XDir_Num++) {
-            for (YDir_Num = 0; YDir_Num < 2 * Dot_Pixel - 1; YDir_Num++) {
-                if(Xpoint + XDir_Num - Dot_Pixel < 0 || Ypoint + YDir_Num - Dot_Pixel < 0)
+        for (XDir_Num = 0; XDir_Num < (int16_t)(2 * Dot_Pixel - 1); XDir_Num++) {
+            for (YDir_Num = 0; YDir_Num < (int16_t)(2 * Dot_Pixel - 1); YDir_Num++) {
+                int16_t x_pos = Xpoint + XDir_Num - Dot_Pixel;
+                int16_t y_pos = Ypoint + YDir_Num - Dot_Pixel;
+                if(x_pos < 0 || y_pos < 0)
                     break;
 				//DEBUG("Paint_DrawPoint x:%d y:%d color:0x%x\r\n",Xpoint + XDir_Num - Dot_Pixel, Ypoint + YDir_Num - Dot_Pixel,Color);
                 //printf("x = %d, y = %d\r\n", Xpoint + XDir_Num - Dot_Pixel, Ypoint + YDir_Num - Dot_Pixel);
-                Paint_SetPixel(Xpoint + XDir_Num - Dot_Pixel, Ypoint + YDir_Num - Dot_Pixel, Color);
+                Paint_SetPixel(x_pos, y_pos, Color);
             }
         }
     } else {
-        for (XDir_Num = 0; XDir_Num <  Dot_Pixel; XDir_Num++) {
-            for (YDir_Num = 0; YDir_Num <  Dot_Pixel; YDir_Num++) {
+        for (XDir_Num = 0; XDir_Num < (int16_t)Dot_Pixel; XDir_Num++) {
+            for (YDir_Num = 0; YDir_Num < (int16_t)Dot_Pixel; YDir_Num++) {
                 Paint_SetPixel(Xpoint + XDir_Num - 1, Ypoint + YDir_Num - 1, Color);
 				
             }

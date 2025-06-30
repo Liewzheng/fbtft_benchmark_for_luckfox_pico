@@ -111,12 +111,14 @@ void DEV_HARDWARE_SPI_beginSet(char *SPI_device, SPIMode mode, uint32_t speed)
     }
     
     ret = ioctl(hardware_SPI.fd, SPI_IOC_WR_BITS_PER_WORD, &bits);
-    if (ret == -1) 
+    if (ret == -1) {
         DEV_HARDWARE_SPI_Debug("can't set bits per word\r\n"); 
+    }
  
     ret = ioctl(hardware_SPI.fd, SPI_IOC_RD_BITS_PER_WORD, &bits);
-    if (ret == -1) 
+    if (ret == -1) {
         DEV_HARDWARE_SPI_Debug("can't get bits per word\r\n"); 
+    } 
 
     DEV_HARDWARE_SPI_Mode(mode);
     DEV_HARDWARE_SPI_ChipSelect(SPI_CS_Mode_LOW);
@@ -336,8 +338,9 @@ uint8_t DEV_HARDWARE_SPI_TransferByte(uint8_t buf)
     tr.rx_buf =  (unsigned long)rbuf;
     
     //ioctl Operation, transmission of data
-    if ( ioctl(hardware_SPI.fd, SPI_IOC_MESSAGE(1), &tr) < 1 )  
+    if ( ioctl(hardware_SPI.fd, SPI_IOC_MESSAGE(1), &tr) < 1 ) {
         DEV_HARDWARE_SPI_Debug("can't send spi message\r\n"); 
+    } 
     return rbuf[0];
 }
 
