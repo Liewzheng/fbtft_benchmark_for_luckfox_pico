@@ -290,6 +290,7 @@ void PICO_LCD_2IN_DrawPaint(UWORD x, UWORD y, UWORD Color)
 
 void  Handler_2IN_LCD(int signo)
 {
+	(void)signo;
     //System Exit
     printf("\r\nHandler:Program stop\r\n");     
     DEV_ModuleExit();
